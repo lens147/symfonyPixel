@@ -1,18 +1,19 @@
 games:
-  title: Jeux
+  title: Liste de jeux
   new:
     title: Ajouter un jeu
-    success: Le jeu a bien été ajouté
+    success: Le jeu "%title%" a bien été ajouté
   edit:
     title: Modifier un jeu
-    success: Le jeu a bien été modifié
+    success: Le jeu "%title%" a bien été modifié
   delete:
     title: Supprimer un jeu
-    confirm: Confirmer la suppression de ce jeu ?
-    success: Le jeu a bien été supprimé
+    confirm: Confirmer la suppression de ce jeu "%title%" ?
+    success: Le jeu "%title%" a bien été supprimé
 
 tableAdmin:
   title: Titre
+  title_help: Ecriver le titre en entier
   editor: Editeur
   activate: Activé
   actions: Actions

@@ -3,6 +3,7 @@
     namespace App\Form;
 
 use App\Entity\Games;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,8 +13,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('title')
-                ->add('editor')
+                ->add('title', null, [
+                    'label' => 'tableAdmin.title',
+                    'help' => 'tableAdmin.title_help',
+                ])
+                ->add('editor', null, [
+                    'label' => 'tableAdmin.editor',
+                    'query_builder' => function (EntityRepository $er){
+                        return $er->createQueryBuilder('e')
+                        ->orderBy('e.name', 'ASC')
+                        ;
+                    }
+                ])
                 ->add('bool')
                 ->add('description')
             ;

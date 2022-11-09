@@ -44,7 +44,9 @@ class GamesController extends AbstractController
             $em->flush();
 
             //Ajout de message temporaire, addFlash est une fonction de symfony, qui indique le nom du message, puis le contenu
-            $this->addFlash('success', $translator->trans('games.new.success'));
+            $this->addFlash('success', $translator->trans('games.new.success', [
+                '%title%' => $entity->getTitle(),
+            ]));
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
@@ -85,7 +87,9 @@ class GamesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('warning', $translator->trans('games.edit.success'));
+            $this->addFlash('warning', $translator->trans('games.edit.success', [
+                '%title%' => $entity->getTitle(),
+            ]));
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
@@ -104,7 +108,9 @@ class GamesController extends AbstractController
         if ($this->isCsrfTokenValid('delete_games_'.$entity->getId(), $request->get('token'))) {
             $em->remove($entity);
             $em->flush();
-            $this->addFlash('danger', $translator->trans('games.delete.success'));
+            $this->addFlash('danger', $translator->trans('games.delete.success', [
+                '%title%' => $entity->getTitle(),
+            ]));
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
