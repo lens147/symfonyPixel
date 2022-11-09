@@ -42,7 +42,10 @@ class GamesController extends AbstractController
             $em->persist($entity);
             $em->flush();
 
-            return$this->redirectToRoute('app_gamesapp_admin');
+            //Ajout de message temporaire, addFlash est une fonction de symfony, qui indique le nom du message, puis le contenu
+            $this->addFlash('success', "Le jeu a bien été ajouté");
+
+            return $this->redirectToRoute('app_gamesapp_admin');
         }
 
         return $this->render('games/new.html.twig', [
@@ -81,6 +84,7 @@ class GamesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('warning', "Le jeu a bien été modifié");
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
@@ -99,6 +103,7 @@ class GamesController extends AbstractController
         if ($this->isCsrfTokenValid('delete_games_'.$entity->getId(), $request->get('token'))) {
             $em->remove($entity);
             $em->flush();
+            $this->addFlash('danger', "Le jeu a bien été supprimé");
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
