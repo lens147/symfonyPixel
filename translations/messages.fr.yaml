@@ -1,3 +1,5 @@
+no: Non
+yes: Oui
 games:
   title: Liste de jeux
   new:
@@ -17,3 +19,5 @@ tableAdmin:
   editor: Editeur
   activate: Activé
   actions: Actions
+  enabled: Activé
+  description: Description

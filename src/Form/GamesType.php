@@ -5,6 +5,7 @@
 use App\Entity\Games;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,8 +26,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
                         ;
                     }
                 ])
-                ->add('bool')
-                ->add('description')
+                ->add('bool', ChoiceType::class, [
+                    'label' => 'tableAdmin.enabled',
+                    'choices' => [
+                        'no' => false,
+                        'yes' => true,
+                    ],
+                    'expanded' => true,
+                ])
+                ->add('description', null, [
+                    'label' => 'tableAdmin.description',
+                    'attr' => [
+                        'row' => 10,
+                    ]
+                ])
             ;
         }
 
