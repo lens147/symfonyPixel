@@ -26,8 +26,8 @@ class Games
     private ?bool $bool = false;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?Editor $editor = null;
-
     
     public function getId(): ?int
     {
