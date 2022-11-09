@@ -25,6 +25,9 @@ class Games
     #[ORM\Column]
     private ?bool $bool = false;
 
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    private ?Editor $editor = null;
+
     
     public function getId(): ?int
     {
@@ -63,6 +66,18 @@ class Games
     public function setBool(bool $bool): self
     {
         $this->bool = $bool;
+
+        return $this;
+    }
+
+    public function getEditor(): ?Editor
+    {
+        return $this->editor;
+    }
+
+    public function setEditor(?Editor $editor): self
+    {
+        $this->editor = $editor;
 
         return $this;
     }
