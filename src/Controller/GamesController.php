@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/games', name: 'app_games')]
 
@@ -18,7 +19,7 @@ class GamesController extends AbstractController
 {
 
     #[Route('/new', name: 'app_new')]
-    public function new(EntityManagerInterface $em, Request $request): Response
+    public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator): Response
     {
         // $newGames = new Games;
         // $newGames->setTitle("Super Titre");
@@ -43,7 +44,7 @@ class GamesController extends AbstractController
             $em->flush();
 
             //Ajout de message temporaire, addFlash est une fonction de symfony, qui indique le nom du message, puis le contenu
-            $this->addFlash('success', "Le jeu a bien été ajouté");
+            $this->addFlash('success', $translator->trans('games.new.success'));
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
@@ -77,14 +78,14 @@ class GamesController extends AbstractController
      * 
      * @Route("/{id}/edit", requirements={"id": "\d+"})
      */
-    public function edit(EntityManagerInterface $em, Request $request, Games $entity): Response{
+    public function edit(EntityManagerInterface $em, Request $request, Games $entity, TranslatorInterface $translator): Response{
         $form = $this->createForm(GamesType::class, $entity);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('warning', "Le jeu a bien été modifié");
+            $this->addFlash('warning', $translator->trans('games.edit.success'));
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }
@@ -98,12 +99,12 @@ class GamesController extends AbstractController
     /**
      * @Route("/{id}/delete", requirements={"id": "\d+"})
      */
-    public function delete(EntityManagerInterface $em, Request $request, Games $entity): Response{
+    public function delete(EntityManagerInterface $em, Request $request, Games $entity, TranslatorInterface $translator): Response{
 
         if ($this->isCsrfTokenValid('delete_games_'.$entity->getId(), $request->get('token'))) {
             $em->remove($entity);
             $em->flush();
-            $this->addFlash('danger', "Le jeu a bien été supprimé");
+            $this->addFlash('danger', $translator->trans('games.delete.success'));
 
             return $this->redirectToRoute('app_gamesapp_admin');
         }

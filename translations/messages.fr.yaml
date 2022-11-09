@@ -1,0 +1,18 @@
+games:
+  title: Jeux
+  new:
+    title: Ajouter un jeu
+    success: Le jeu a bien été ajouté
+  edit:
+    title: Modifier un jeu
+    success: Le jeu a bien été modifié
+  delete:
+    title: Supprimer un jeu
+    confirm: Confirmer la suppression de ce jeu ?
+    success: Le jeu a bien été supprimé
+
+tableAdmin:
+  title: Titre
+  editor: Editeur
+  activate: Activé
+  actions: Actions

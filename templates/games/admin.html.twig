@@ -2,13 +2,13 @@
 
 {% block content %}
 
-    <p>list games</p>
+    <h1>{{ 'games.title'|trans }}</h1>
 
     {# div>table.table>thead>tr>th*3 #}
 
     <div class="card">
         <div class="card-header">
-            <a href="{{ path('app_gamesapp_new') }}" class"btn btn-success">Ajouter un jeu</a>
+            <a href="{{ path('app_gamesapp_new') }}" class"btn btn-success">{{ 'games.new.title'|trans }}</a>
         </div>
     </div>
     <div class="card-body">
@@ -20,10 +20,10 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Titre</th>
-                        <th>Editeur</th>
-                        <th>Activé</th>
-                        <th>Actions</th>
+                        <th>{{ 'tableAdmin.title'|trans }}</th>
+                        <th>{{ 'tableAdmin.editor'|trans }}</th>
+                        <th>{{ 'tableAdmin.activate'|trans }}</th>
+                        <th>{{ 'tableAdmin.actions'|trans }}</th>
                     </tr>
                 </thead>
 
