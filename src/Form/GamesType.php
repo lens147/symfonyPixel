@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
         {
             $builder
                 ->add('title')
+                ->add('editor')
                 ->add('bool')
                 ->add('description')
             ;
