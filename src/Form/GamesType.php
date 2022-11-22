@@ -22,9 +22,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
                     'label' => 'tableAdmin.editor',
                     'query_builder' => function (EntityRepository $er){
                         return $er->createQueryBuilder('e')
-                        ->orderBy('e.name', 'ASC')
-                        ;
+                        ->orderBy('e.name', 'ASC');
                     }
+                ])
+                ->add('releaseDate',DateType::class,[
+                    'label' => 'tableAdmin.releaseDate',
+                    'required' => true,
+                    'widget' => 'choice',
+                    'input'  => 'array',
+                    'years' => range(1972,date("Y")),
                 ])
                 ->add('bool', ChoiceType::class, [
                     'label' => 'tableAdmin.enabled',

@@ -16,6 +16,7 @@ games:
 tableAdmin:
   title: Titre
   title_help: Ecriver le titre en entier
+  releaseDate: ReleaseDate
   editor: Editeur
   activate: Activé
   actions: Actions

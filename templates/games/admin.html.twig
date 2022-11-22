@@ -2,55 +2,58 @@
 
 {% block content %}
 
-    <h1>{{ 'games.title'|trans }}</h1>
+	<h1>{{ 'games.title'|trans }}</h1>
 
-    {# div>table.table>thead>tr>th*3 #}
+	{# div>table.table>thead>tr>th*3 #}
 
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ path('app_gamesapp_new') }}" class"btn btn-success">{{ 'games.new.title'|trans }}</a>
-        </div>
-    </div>
-    <div class="card-body">
-        <form action="" method="get" class="d-flex my-3">
-            <input type="text" name="s" class="form-control" value="{{ app.request.get('s') }}" />
-            <button type="submit" class="btn btn-light ms-1">Rechercher</button>
-        </form>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>{{ 'tableAdmin.title'|trans }}</th>
-                        <th>{{ 'tableAdmin.editor'|trans }}</th>
-                        <th>{{ 'tableAdmin.activate'|trans }}</th>
-                        <th>{{ 'tableAdmin.actions'|trans }}</th>
-                    </tr>
-                </thead>
+	<div class="card">
+		<div class="card-header">
+			<a href="{{ path('app_gamesapp_new') }}" class"btn btn-success">{{ 'games.new.title'|trans }}</a>
+		</div>
+	</div>
+	<div class="card-body">
+		<form action="" method="get" class="d-flex my-3">
+			<input type="text" name="s" class="form-control" value="{{ app.request.get('s') }}"/>
+			<button type="submit" class="btn btn-light ms-1">Rechercher</button>
+		</form>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>{{ 'tableAdmin.title'|trans }}</th>
+						<th>{{ 'tableAdmin.editor'|trans }}</th>
+						<th>{{ 'tableAdmin.releaseDate'|trans }}</th>
+						<th>{{ 'tableAdmin.activate'|trans }}</th>
+						<th>{{ 'tableAdmin.actions'|trans }}</th>
+					</tr>
+				</thead>
 
-                <tbody>
-                    {% for entity in entities %}
-                        <tr>
-                            <td>{{ entity.title }}</td>
-                            <td>{{ entity.editor }}</td>
-                            <td class="text-white {{ entity.bool ? 'bg-success' : 'bg-warning' }}">{{ entity.bool ? 'Oui' : 'Non' }}</td>
-                            <td>
-                                <a href="{{ path('app_gamesapp_games_edit', {"id": entity.id}) }}" class="btn btn-light">Modifier</a>
+				<tbody>
+					{% for entity in entities %}
+						<tr>
+							<td>{{ entity.title }}</td>
+							<td>{{ entity.editor }}</td>
+							<td>{{ entity.releaseDate }}</td>
+							<td class="text-white {{ entity.bool ? 'bg-success' : 'bg-warning' }}">{{ entity.bool ? 'Oui' : 'Non' }}</td>
+							<td>
+								<a href="{{ path('app_gamesapp_games_edit', {"id": entity.id}) }}" class="btn btn-light">Modifier</a>
 
-                                <a href="{{ path('app_gamesapp_games_delete', {"id": entity.id}) }}" class="btn btn-danger">Supprimer</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+								<a href="{{ path('app_gamesapp_games_delete', {"id": entity.id}) }}" class="btn btn-danger">Supprimer</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 
-        <div class="card-footer">
-            <div class="d-flex justify-content-between align-items-center">
-                {% include "decorator/_pagination.html.twig" with {"route": "app_gamesapp_admin"} %}
+		<div class="card-footer">
+			<div class="d-flex justify-content-between align-items-center">
+				{% include "decorator/_pagination.html.twig" with {"route": "app_gamesapp_admin"} %}
 
-                <div>{{ entities.count }} jeux</div>
-            </div>
-        </div>
-    </div>
+				<div>{{ entities.count }}
+					jeux</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

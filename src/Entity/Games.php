@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\GamesRepository;
+use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GamesRepository::class)]
@@ -28,6 +30,7 @@ class Games
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?Editor $editor = null;
+    private ?DateType $releaseDate = null;
     
     public function getId(): ?int
     {
@@ -78,6 +81,16 @@ class Games
     public function setEditor(?Editor $editor): self
     {
         $this->editor = $editor;
+
+        return $this;
+    }
+    public function getReleaseDate(): ?TypeDateType
+    {
+        return $this->releaseDate;
+    }
+    public function setReleaseDate(?DateType $releaseDate): self
+    {
+        $this->releaseDate = $releaseDate;
 
         return $this;
     }
