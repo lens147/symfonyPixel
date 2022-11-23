@@ -30,6 +30,8 @@ class Games
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?Editor $editor = null;
+
+    #[ORM\Column]
     private ?DateType $releaseDate = null;
     
     public function getId(): ?int
@@ -90,7 +92,7 @@ class Games
     }
     public function setReleaseDate(?DateType $releaseDate): self
     {
-        $this->releaseDate = $releaseDate;
+        $this->releaseDate = $releaseDate["year"];
 
         return $this;
     }
