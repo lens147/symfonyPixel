@@ -6,8 +6,10 @@ use App\Entity\Games;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 
     class GamesType extends AbstractType{
 
@@ -25,13 +27,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
                         ->orderBy('e.name', 'ASC');
                     }
                 ])
-                ->add('releaseDate',DateType::class,[
+
+                ->add('releaseDate', DateType::class, [
                     'label' => 'tableAdmin.releaseDate',
-                    'required' => true,
-                    'widget' => 'choice',
-                    'input'  => 'array',
                     'years' => range(1972,date("Y")),
                 ])
+
                 ->add('bool', ChoiceType::class, [
                     'label' => 'tableAdmin.enabled',
                     'choices' => [
@@ -46,6 +47,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
                         'row' => 10,
                     ]
                 ])
+
+                ->add('mainImage', ImageType::class, [
+                    'label' => 'tableAdmin.Image'
+                ])
+
             ;
         }
 

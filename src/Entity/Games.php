@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\GamesRepository;
-use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
+use App\Repository\GamesRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GamesRepository::class)]
@@ -31,9 +29,17 @@ class Games
     #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?Editor $editor = null;
 
-    #[ORM\Column]
-    private ?DateType $releaseDate = null;
-    
+/*     #[ORM\Column(type: Types::DATE_IMMUTABLE)] */
+    private ?\DateTime $releaseDate;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Image $mainImage = null;
+
+    public function __construct()
+    {
+        $this->releaseDate = new \DateTime;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,13 +92,25 @@ class Games
 
         return $this;
     }
-    public function getReleaseDate(): ?TypeDateType
+    public function getReleaseDate(): ?\DateTime
     {
-        return $this->releaseDate;
+        return $this->releaseDate ?? new \DateTime;
     }
-    public function setReleaseDate(?DateType $releaseDate): self
+    public function setReleaseDate(?\DateTime $releaseDate): self
     {
-        $this->releaseDate = $releaseDate["year"];
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    public function getMainImage(): ?Image
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(?Image $mainImage): self
+    {
+        $this->mainImage = $mainImage;
 
         return $this;
     }
