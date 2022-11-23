@@ -8,7 +8,32 @@
 {{ form_errors(form) }}
     <div class="card">
         <div class="card-body">
-            {{ form_widget(form) }}
+            {# {{ form_widget(form) }} #}
+
+            <div class="row">
+                <div class="col-md-8">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.releaseDate) }}
+                    {{ form_row(form.description) }}
+                </div>
+
+                <div class="col-md-4">
+                    {{ form_row(form.enabled) }}
+                    {{ form_row(form.editor) }}
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                {% if entity.mainImage is not empty %}
+                    <img src="{{ asset(entity.mainImage.webPath) }}" alt="">
+                {% endif %}
+
+                <div class="flex-grow-1">
+                    {{ form_row(form.mainImage.file) }}
+                </div>
+            </div>
+
+
         </div>
 
         <div class="card-footer">
