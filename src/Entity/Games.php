@@ -112,7 +112,9 @@ class Games
 
     public function setMainImage(?Image $mainImage): self
     {
-        $this->mainImage = $mainImage;
+        if ($mainImage !== null && $mainImage->getPath() !== null) {
+            $this->mainImage = $mainImage;
+        }
 
         return $this;
     }
