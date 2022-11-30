@@ -19,6 +19,7 @@ class GamesController extends AbstractController
 {
 
     #[Route('/new', name: 'app_new')]
+    #[IsGranted("ROLE_USER")]
     public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator): Response
     {
         // $newGames = new Games;
@@ -31,7 +32,7 @@ class GamesController extends AbstractController
         // Nouveau version du code
 
         $entity = new Games;
-
+        $entity->setAuthor($this->getUser());
         // Création d'un formulaire, et envoyer dans $entity
         $form = $this->createForm(GamesType::class, $entity);
 
@@ -57,8 +58,15 @@ class GamesController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_admin')]
+    #[IsGranted("ROLE_USER")]
     public function admin(GamesRepository $gamesRepository, Request $request): Response
     {
+        $author = $this->getUser();
+
+        if ($this->isGranted('ROLE_USER')) {
+            $author = null;
+        }
+
         $p = $request->get('p', 1); // Page 1 par defaut
         $itemCount = 5;
         $search = $request->get('s', '');
@@ -81,6 +89,10 @@ class GamesController extends AbstractController
      * @Route("/{id}/edit", requirements={"id": "\d+"})
      */
     public function edit(EntityManagerInterface $em, Request $request, Games $entity, TranslatorInterface $translator): Response{
+        if ($entity->getAuthor() === null) {
+            $entity->setAuthor($this->getUser());
+        }
+        
         $form = $this->createForm(GamesType::class, $entity);
 
         $form->handleRequest($request);

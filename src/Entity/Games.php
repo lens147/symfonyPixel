@@ -37,6 +37,9 @@ class Games
 
     private bool $deleteMainImage;
 
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    private ?User $author = null;
+
     public function __construct()
     {
         $this->releaseDate = new \DateTime;
@@ -131,6 +134,18 @@ class Games
         if ($this->deleteMainImage) {
             $this->mainImage = null;
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Games;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,7 +41,7 @@ class GamesRepository extends ServiceEntityRepository
         }
     }
 
-    public function findData(Int $itemCount = 20, Int $page = 1, String $search = ''): Paginator{
+    public function findData(Int $itemCount = 20, Int $page = 1, String $search = '', User $author = null): Paginator{
         $begin = ($page - 1) * $itemCount; //Calcul de l'offset de
 
         $qb = $this->createQueryBuilder('g')
@@ -52,6 +53,12 @@ class GamesRepository extends ServiceEntityRepository
             $qb->where("g.title LIKE :search") // LIKE = un mot clef pour chercher une chaine, et le :search est un paramettre
                 ->setParameter(':search', "%$search%") // les % permettent de ne pas avoir besoin du nom exacte que ça sois avant le mot noté ou après
             ;
+        }
+
+        if ($author !== null) {
+            $qb->andWhere('g.author', $author)
+                ->setParameter(':author', $author)
+                ;
         }
 
         return new Paginator($qb->getQuery());
