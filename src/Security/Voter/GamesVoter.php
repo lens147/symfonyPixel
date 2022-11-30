@@ -33,6 +33,7 @@ class GamesVoter extends Voter
             case self::EDIT:
                 // logic to determine if the user can EDIT
                 // return true or false
+                return $subject->getAuthor() == $user || ($user instanceof User && $user->hasRole('ROLE_ADMIN'));
                 break;
             case self::VIEW:
                 // logic to determine if the user can VIEW
