@@ -22,3 +22,4 @@ tableAdmin:
   actions: Actions
   enabled: Activé
   description: Description
+  delete_main_image: supprimer l'image

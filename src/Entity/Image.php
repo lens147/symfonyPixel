@@ -65,7 +65,7 @@ class Image
     public function setFile(UploadedFile $file): self
     {
         $this->file = $file;
-        $this->oldPath = $this->path;
+        $this->oldPath = $this->path ?? '';
         $this->path = ''; // on vide le path pour que Doctrine puisse comprendre que le prochain path est pas pareil
 
         return $this;
@@ -110,5 +110,13 @@ class Image
     public function getWebPath(): string
     {
         return '/uploads/'. $this->path;
+    }
+
+    #[ORM\PreRemove]
+    public function removeFile(): void
+    {
+        if (is_file(self::getPublicRootDir().$this->path)) {
+            unlink(self::getPublicRootDir().$this->path);
+        }
     }
 }

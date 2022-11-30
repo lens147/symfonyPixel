@@ -5,6 +5,7 @@
 use App\Entity\Games;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,6 +51,11 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
                 ->add('mainImage', ImageType::class, [
                     'label' => 'tableAdmin.Image'
+                ])
+
+                ->add('deleteMainImage', CheckboxType::class, [
+                    'label' => 'tableAdmin.delete_main_image',
+                    'required' => false
                 ])
 
             ;

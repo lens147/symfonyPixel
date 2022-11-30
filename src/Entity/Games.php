@@ -32,8 +32,10 @@ class Games
 /*     #[ORM\Column(type: Types::DATE_IMMUTABLE)] */
     private ?\DateTime $releaseDate;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Image $mainImage = null;
+
+    private bool $deleteMainImage;
 
     public function __construct()
     {
@@ -114,4 +116,21 @@ class Games
 
         return $this;
     }
+
+    public function getDeleteMainImage(): bool
+    {
+        return $this->deleteMainImage;
+    }
+
+    public function setDeleteMainImage(?bool $deleteMainImage): self
+    {
+        $this->deleteMainImage = $deleteMainImage;
+
+        if ($this->deleteMainImage) {
+            $this->mainImage = null;
+        }
+
+        return $this;
+    }
+
 }
