@@ -23,3 +23,6 @@ tableAdmin:
   enabled: Activé
   description: Description
   delete_main_image: supprimer l'image
+
+registration:
+  register: Enregistrer

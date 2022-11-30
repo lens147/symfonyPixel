@@ -1,0 +1,14 @@
+{% extends 'front.layout.html.twig' %}
+
+{% block content %}
+
+{% if is_granted(ROLE_USER) %}
+
+    <strong>Hello {{ app.user.userIdentifier }}</strong>
+{% else %}
+    <a href="{{ path('app_login') }}" class="btn btn-primary">Identifiez vous</a>
+    <a href="{{ path('app_register') }}" class="btn btn-primary">Inscrivez vous</a>
+
+{% endif %}
+
+{% endblock %}
