@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Games;
 use App\Form\GamesType;
 use App\Repository\GamesRepository;
+use App\Security\Voter\GamesVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -89,7 +90,12 @@ class GamesController extends AbstractController
      * 
      * @Route("/{id}/edit", requirements={"id": "\d+"})
      */
+    #[IsGranted("ROLE_USER")]
     public function edit(EntityManagerInterface $em, Request $request, Games $entity, TranslatorInterface $translator): Response{
+        
+        $this->denyAccessUnlessGranted(GamesVoter::EDIT, $entity);
+
+        
         if ($entity->getAuthor() === null) {
             $entity->setAuthor($this->getUser());
         }
