@@ -21,9 +21,13 @@ class Editor
     #[ORM\OneToMany(mappedBy: 'editor', targetEntity: Games::class)]
     private Collection $games;
 
+    #[ORM\OneToMany(mappedBy: 'constructeur', targetEntity: Support::class)]
+    private Collection $supports;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->supports = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -72,6 +76,36 @@ class Editor
             // set the owning side to null (unless already changed)
             if ($game->getEditor() === $this) {
                 $game->setEditor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Support>
+     */
+    public function getSupports(): Collection
+    {
+        return $this->supports;
+    }
+
+    public function addSupport(Support $support): self
+    {
+        if (!$this->supports->contains($support)) {
+            $this->supports->add($support);
+            $support->setConstructeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupport(Support $support): self
+    {
+        if ($this->supports->removeElement($support)) {
+            // set the owning side to null (unless already changed)
+            if ($support->getConstructeur() === $this) {
+                $support->setConstructeur(null);
             }
         }
 
